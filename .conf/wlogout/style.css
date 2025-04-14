@@ -1,0 +1,87 @@
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+  font-family: "Fira Sans Semibold", Roboto, Helvetica, Arial, sans-serif;
+  background-image: none;
+  font-size: 20px;
+  transition: 20ms;
+  box-shadow: none;
+}
+
+window {
+    background-color: rgba(12, 12, 12, 0.9);
+} 
+
+button {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15%;
+
+  background-color: rgba(12, 12, 12, 0.3);
+  animation: gradient_f 20s ease-in infinite;
+  transition: all 0.3s ease-in;
+  box-shadow: 0 0 10px 2px transparent;
+  border-radius: 20px;
+  color: @color3;
+  margin: 10px;
+  border: none;
+}
+
+button:focus {
+  box-shadow: none;
+  background-size : 20%;
+}
+
+button:hover {
+    background-size: 25%;
+    box-shadow: 0 0 10px 3px rgba(0,0,0,.4);
+    background-color: rgba(255, 255, 255, 0.729);
+    color: rgb(223, 33, 99);
+    transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.5s ease-in;
+}
+
+#lock {
+  background-image: image(url("./icons/lock.png"));
+}
+
+#lock:hover {
+  background-image: image(url("./icons/lock-hover.png"));
+}
+
+#logout {
+  background-image: image(url("./icons/logout.png"));
+
+}
+
+#logout:hover {
+  background-image: image(url("./icons/logout-hover.png"));
+}
+
+#hibernate {
+  background-image: image(url("./icons/hibernate.png"));
+}
+#hibernate:hover {
+background-image: image(url("./icons/hibernate-hover.png"));
+}
+
+#suspend {
+  background-image: image(url("./icons/suspend.png"));
+}
+#suspend:hover {
+  background-image: image(url("./icons/suspend-hover.png"));
+}
+
+#reboot {
+    background-image: image(url("./icons/restart.png"));
+}
+#reboot:hover {
+  background-image: image(url("./icons/restart-hover.png"));
+}
+
+#shutdown {
+  background-image: image(url("./icons/power.png"));
+}
+#shutdown:hover {
+background-image: image(url("./icons/power-hover.png"));
+}
+

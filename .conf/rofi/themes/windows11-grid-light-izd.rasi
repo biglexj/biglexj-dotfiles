@@ -1,0 +1,116 @@
+* {
+  font: "NDot57 Bold 24";
+  bg0    : #ffffff80;
+  bg1    :rgba(249, 249, 249, 0.63);
+  bg2    : #f7f7f7;
+  bg3    : #fefefebf;
+  fg0    : #1a1a1a;
+  fg1    : #5f5f5f;
+  accent : #005fb8; 
+  urgent : @accent;
+
+  background-color : transparent;
+  text-color       : @fg0;
+
+  margin  : 0;
+  padding : 0;
+  spacing : 0;
+}
+
+element-icon, element-text, scrollbar {
+  cursor: pointer;
+}
+
+window {
+  width    : 1000px;
+  height   : 1100px;
+  location: south;
+  x-offset: -915;
+  y-offset: -90;
+  padding : 30;
+  background-color : @bg1;
+  border-radius    : 12px;
+}
+
+mainbox {
+  padding : 24px;
+  spacing : 30px;
+}
+
+inputbar {
+  padding          : 10px;
+  spacing          : 5px;
+  children         : [ icon-search, entry ];
+  border           : 0 0 2px 0 solid;
+  border-color     : @accent;
+  border-radius    : 10px;
+  background-color : @bg0;
+}
+
+icon-search, entry, element-icon, element-text {
+  vertical-align: 0.5;
+}
+
+icon-search {
+  expand   : false;
+  filename : "search-symbolic";
+  size     : 24px;
+}
+
+entry {
+  font              : "NDot57 Bold 11 14";
+  placeholder       : "Buscar";
+  placeholder-color : @fg1;
+}
+
+textbox {
+  padding          : 4px 8px;
+  background-color : @bg2;
+}
+
+listview {
+  columns       : 4;
+  spacing       : 10px;
+  fixed-height  : true;
+  fixed-columns : true;
+}
+
+element {
+  orientation   : vertical;
+  spacing       : 6px;
+  padding       : 7px;
+  border-radius : 10px;
+}
+
+element normal urgent {
+  text-color: @urgent;
+}
+
+element normal active {
+  text-color: @accent;
+}
+
+element alternate active {
+  text-color: @accent;
+}
+
+element selected active {
+  text-color: @accent;
+}
+
+element selected {
+  background-color: @bg3;
+}
+
+element selected urgent {
+  background-color: @urgent;
+}
+
+element-icon {
+  size: 2em;
+}
+
+element-text {
+  text-color       : inherit;
+  horizontal-align : 0.5;
+}

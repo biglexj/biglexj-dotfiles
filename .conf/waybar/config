@@ -1,0 +1,38 @@
+{
+    "layer": "top", // Waybar at top layer
+    //"position": "bottom", // Waybar position (top|bottom|left|right)
+    "width": 1425, // Waybar width
+    //"height": 20, // Waybar height
+    "spacing": 4, // Gaps between modules (4px)
+    "margin-top": 5, // Margin (top|bottom|left|right)
+
+    // Load Modules
+    "include": [
+        "~//.config/ml4w/settings/waybar-quicklinks.json",
+        "~/.config/waybar/modules.json"
+    ],
+
+    "modules-left": [
+        "custom/launcher",
+        "cpu",
+        "memory",
+        "disk",
+        "group/quicklinks",
+        "hyprland/window"
+    ],
+	"modules-center": [
+        "hyprland/workspaces"
+    ],
+	"modules-right": [
+        "custom/media",
+        "network",
+        "pulseaudio",
+        "backlight",
+        "battery",
+        "power-profiles-daemon",
+        "bluetooth",
+        "clock",
+        "custom/notification",
+        "custom/power"
+    ]
+}

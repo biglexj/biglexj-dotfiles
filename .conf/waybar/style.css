@@ -1,0 +1,265 @@
+/*
+ * __        __          _                  ____  _         _       
+ * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___  
+ *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \ 
+ *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/ 
+ *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___| 
+ *                 |___/                              |___/         
+ *  
+ * by Biglex J (2025) 
+ * ---------------------------------------------------------------- 
+*/
+
+@define-color backgroundLight #FFFFFF;
+@define-color backgroundDark #222330;
+@define-color workspacesbackground1 #FFFFFF;
+@define-color workspacesbackground2 #CCCCCC;
+@define-color bordercolor #FFFFFF;
+@define-color textcolorBlack #000000;
+@define-color textcolorDark #222225;
+@define-color textcolorWhite #FFFFFF;
+@define-color textcolorSilver #adadad;
+@define-color iconcolor #FFFFFF;
+@define-color action #28caaa;
+
+* {
+	border: none;
+    font-family: "Agave Nerd Font", "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	min-height: 28px; /*Incrementar el valor alto del padding e incrementara la altura*/ 
+	padding: 0 3px;
+	border-radius: 12px;
+
+}
+
+window {}
+
+window#waybar {
+	background-color: transparent;
+}
+
+window#waybar.hidden {
+	opacity: 0.2;
+}
+
+ /*Modules Center */
+
+#workspaces {
+	border-radius: 12px;
+	background: @backgroundDark;
+	transition: none;
+    padding: 0 8px;
+}
+
+#workspaces button {
+	transition: none;
+	color: #B5E8E6;
+	background: transparent;
+    margin: 0px 6px;
+	padding: 0px 10px 0 4px;
+}
+
+#workspaces button.persistent {
+    transition: none;
+    color: #7aa2f7;
+    background: transparent;
+    font-size: 4px;
+}
+
+#workspaces button.empty {
+	color: #583794;
+    font-size: 2px;
+    transition: none;
+    background: transparent;
+}
+
+#workspaces button.active {
+	transition: none;
+	color: #e0af68;
+	background: transparent;
+	font-size: 4px;
+}
+
+/*Modules Left */
+
+#custom-launcher {
+	padding: 0 8px;
+	border-radius: 10px;
+	transition: none;
+    color: #7dcfff;
+    background: @backgroundDark;
+}
+
+/* -----------------------------------------------------
+ * Hardware Group
+ * ----------------------------------------------------- */
+
+#cpu,#memory,#disk {
+	padding: 0 10px;
+	border-radius: 10px;
+	transition: none;
+	background: @backgroundDark;
+}
+
+#cpu {
+	color: #7aa2f7;
+}
+
+#memory {
+	color: #9ece6a;
+}
+
+#disk {
+	color: #bb9af7;
+}
+
+#custom-media {
+	padding: 0 10px;
+	border-radius: 10px;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#custom-media.playing {
+    color: #ac1dd0; /* Verde neón o el que te guste para "reproduciendo" */
+}
+
+#custom-media.paused {
+    color: #ff5555; /* Rojo claro para "pausado" */
+}
+
+#custom-media.stopped {
+	color: @action; /* Gris cuando no hay nada reproduciéndose */
+}
+
+/* -----------------------------------------------------
+ * Window Hyprland
+ * ----------------------------------------------------- */
+
+ #window {
+	padding: 0 6px;
+	background: @backgroundDark;
+    border-radius: 10px;
+    color: @textcolorWhite;
+}
+
+/* -----------------------------------------------------
+ * Custom Quicklinks
+ * ----------------------------------------------------- */
+
+#custom-quicklink1,
+#custom-quicklink2,
+#custom-quicklink3,
+#custom-quicklink4,
+#custom-quicklink5,
+#custom-quicklink6,
+#custom-quicklink7,
+#custom-quicklink8,
+#custom-quicklink9,
+#custom-quicklink10 {
+	padding: 0 6px 1px 8px;
+	margin: 0px 2px;
+	font-size: 20px;
+	border-radius: 10px;
+	background: @backgroundDark;
+    color: @iconcolor;
+}
+
+/*Modules Right */
+
+#network,
+#pulseaudio,
+#backlight {
+	padding: 0 10px;
+	border-radius: 10px;
+	transition: none;
+	background: @backgroundDark;
+}
+
+#network {
+	color: #e0af68;
+}
+
+#pulseaudio {
+	color: @textcolorWhite;
+}
+#backlight {
+	color: #7aa2f7;
+}
+
+#battery {
+	padding: 0 10px;
+	border-radius: 10px;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#battery.charging, #battery.plugged {
+	color: @action;
+    background-color: @backgroundDark;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: @textcolor3;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        color: #B5E8E0;
+    }
+}
+
+#power-profiles-daemon {
+	padding: 0 14px 0 10px;
+	border-radius: 10px;;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#bluetooth {
+	padding: 0 12px;
+	border-radius: 10px;;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#custom-updates {
+	padding: 0 10px;
+	border-radius: 10px;;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#clock {
+	padding: 0 12px;
+	border-radius: 10px;;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#custom-notification {
+	padding: 0 12px;
+	border-radius: 10px;;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
+
+#custom-power {
+	padding: 0 8px 0 10px;
+	transition: none;
+	color: @textcolorWhite;
+	background: @backgroundDark;
+}
