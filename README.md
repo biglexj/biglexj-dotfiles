@@ -19,7 +19,7 @@ Una colección de archivos de configuración (dotfiles) para crear un entorno de
 ## 🛠️ Instalación
 1. Clona este repositorio:
 ```bash
-git clone https://github.com/yourusername/HYPR-Star-dotfiles.git
+git clone https://github.com/biglexj/HYPR-Star-dotfiles.git
 ```
 2. Ejecuta el script de instalación:
 ```bash
