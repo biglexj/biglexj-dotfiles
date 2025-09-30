@@ -1,0 +1,50 @@
+/* === Colores base === */
+:root {
+    --color-bg: rgba(20, 20, 30, 0.95);   /* fondo general */
+    --color-entry: #cdd6f4;              /* texto normal */
+    --color-entry-hover: #1e1e2e;        /* texto al seleccionar */
+    --color-hover-bg: #89b4fa;           /* fondo al seleccionar */
+    --color-border: #585b70;
+    --radius: 12px;
+    --font: 'JetBrains Mono', 'Noto Sans', sans-serif;
+}
+
+/* === Ventana principal === */
+window {
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 90px;
+    font-family: var(--font);
+}
+
+/* === Caja del contenido (como grid) === */
+#main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+/* === Entrada de cada app === */
+#entry {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: var(--radius);
+    color: var(--color-entry);
+    transition: background 0.2s, color 0.2s;
+    text-align: center;
+}
+
+/* === App seleccionada === */
+#entry:selected {
+    background-color: var(--color-hover-bg);
+    color: var(--color-entry-hover);
+    font-weight: bold;
+}
+
+/* === Mensaje de búsqueda vacía === */
+#message {
+    color: var(--color-entry);
+    padding: 10px;
+    text-align: center;
+}

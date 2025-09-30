@@ -1,0 +1,41 @@
+{
+    "label" : "lock",
+    "action" : "hyprlock",
+    "text" : "Bloquear",
+    "keybind" : "c"
+}
+
+{
+    "label" : "logout",
+    "action" : "killall -9 Hyprland",
+    "text" : "Cerrar Sesión",
+    "keybind" : "x"
+}
+
+{
+    "label" : "hibernate",
+    "action" : "systemctl hibernate",
+    "text" : "Hibernar",
+    "keybind" : "d"
+}
+
+{
+    "label" : "suspend",
+    "action" : "systemctl suspend",
+    "text" : "Suspender",
+    "keybind" : "s"
+}
+
+{
+    "label" : "reboot",
+    "action" : "systemctl reboot",
+    "text" : "Reiniciar",
+    "keybind" : "z"
+}
+
+{
+    "label" : "shutdown",
+    "action" : "systemctl poweroff",
+    "text" : "Apagar",
+    "keybind" : "a"
+}
