@@ -1,4 +1,4 @@
-# HYPR Star Dotfiles
+# Biglex J Dotfiles
 
 ## 🚀 Descripción
 Una colección de archivos de configuración (dotfiles) para crear un entorno de escritorio Linux personalizado y elegante utilizando Hyprland.
