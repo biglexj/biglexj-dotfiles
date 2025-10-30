@@ -1,0 +1,104 @@
+//@theme "~/.cache/wal/colors-rofi-dark.rasi"
+* {
+  font: "Rofi Sans 10";
+  bg0    : #1f1f1f80;
+  bg1    : rgba(10,15,30,0.8);
+  bg2    : #2c2c2c;
+  bg3    : #393939bf;
+  fg0    : #ffffff;
+  fg1    : #cecece;
+  accent :rgb(238, 59, 98);
+  urgent : @accent;
+  background-color : transparent;
+  text-color       : @fg0;
+  margin  : 0;
+  padding : 0;
+  spacing : 0;
+}
+element-icon, element-text, scrollbar {
+  cursor: pointer;
+}
+window {
+  width    : 600px;
+  height   : 700px;
+  location : northwest;
+  anchor   : northwest;
+  x-offset : 15px;
+  y-offset : 15px;
+  padding  : 10 20 0 20;
+  background-color : @bg1;
+  border-radius    : 12px;
+}
+mainbox {
+  padding : 24px;
+  spacing : 30px;
+}
+inputbar {
+  padding          : 10px;
+  spacing          : 5px;
+  children         : [ icon-search, entry ];
+  border           : 0 0 2px 0 solid;
+  border-color     : @accent;
+  border-radius    : 10px;
+  background-color : @bg0;
+}
+icon-search, entry, element-icon, element-text {
+  vertical-align: 0.5;
+}
+icon-search {
+  expand   : false;
+  filename : "search-symbolic";
+  size     : 24px;
+}
+entry {
+  font              : "Rofi Sans 14";
+  placeholder       : "Buscar";
+  placeholder-color : @fg1;
+}
+textbox {
+  padding          : 4px 8px;
+  background-color : @bg2;
+}
+listview {
+  columns       : 4;
+  spacing       : 6px;
+  fixed-height  : true;
+  fixed-columns : true;
+}
+element {
+  orientation   : vertical;
+  spacing       : 5px;
+  padding       : 6px;
+  border-radius : 10px;
+}
+element normal urgent {
+  text-color: @accent;
+}
+element normal active {
+  text-color: @accent;
+}
+element alternate active {
+  text-color: @accent;
+}
+element selected active {
+  text-color: @accent;
+}
+element selected {
+  background-color: @bg3;
+}
+element selected urgent {
+  background-color: @urgent;
+}
+element-icon {
+  size: 2.5em;  /* Iconos más grandes - cambiado de 2em a 2.5em */
+}
+element-text {
+  text-color       : inherit;
+  horizontal-align : 0.5;
+  font             : "Rofi Sans 8";  /* AGREGADO: texto más pequeño solo para elementos */
+}
+/*Los valores de location disponibles son:
+ . *north, south, east, west
+ . northeast, northwest, southeast, southwest
+ . center
+ */

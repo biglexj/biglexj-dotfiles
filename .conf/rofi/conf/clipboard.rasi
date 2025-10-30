@@ -1,0 +1,179 @@
+@import "../../.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    modi:                        "drun";
+    show-icons:                  true;
+  	drun-display-format:         "{name}";
+}
+
+* {
+    font:                        "NDot57 Bold 12";
+    background:                  rgba(10,15,30,0.8);
+    background-alt:              rgba(10,20,30,0.7);
+    foreground:                  rgba(10,15,30,0.8);
+    b-white:                     rgba(245,240,250,0.7);
+    b-dark:                      rgba(15,15,25,0.7);
+    text-white:                  rgb(245,245,245);
+    text-dark:                   rgba(15,15,30,0.8);
+    urgent:                      #E01D4B;
+
+    selected:                    @selected-urgent-background;
+    active:                      #909090;
+    urgent:                      #e0e722;
+}
+
+window {
+    width:                       700;
+    height:                      500;
+    margin:                      0px;
+    padding:                     0px;
+    border-radius:               8px;
+    location: south;
+    x-offset: 0;
+    y-offset: -60;
+}
+
+mainbox {
+    orientation:                 vertical;
+    children:                    [ "inputbar", "textbox-help", "message", "listview" ];
+    background-color:            transparent;
+    spacing:                     16px;
+    margin:                      0px;
+    padding:                     44px;
+}
+
+inputbar {
+    children:                    [ "dummy", "entry", "dummy" ];
+    border-radius:               8px;
+    spacing:                     0px;
+    padding:                     50px 44px;
+    orientation:                 horizontal;
+    background-image:            url("~/.config/biglexj/wallpapers/wallpaper.jpg", width);
+}
+
+dummy {
+  background-color: transparent; //Centrar buscar
+}
+
+//Mensaje de ayuda
+
+textbox-help {
+    expand: false;
+    content: " [ CTRL + DEL ]    ELIMINAR                [ ALT + DEL ]   LIMPIAR TODO";
+    border-radius:                 8px;
+    text-color:                    @color5;
+    margin:                        0px;
+    padding:                       12px 10px;
+    background-color:              @b-dark;
+}
+
+//Barra de buscar
+
+entry {
+    cursor:                      inherit;
+    placeholder:                 "BUSCAR";
+    placeholder-color:           #FFFFFF80;
+    border-radius:               10px;
+    background-color:            @background-alt;
+    padding:                     15px 55px;
+}
+
+listview {
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "message", "listview" ];
+
+}
+
+listview {
+    cursor:                      "default";
+    columns:                     2;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   true;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+
+    background-color:            transparent;
+    text-color:                  @foreground;
+
+    spacing:                     12px;
+    margin:                      0px;
+    padding:                     0px;
+}
+
+element {
+    enabled:                     true;
+    spacing:                     8px;
+    padding:                     10px;
+    border-radius:               5px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color:            white;
+    text-color:                  @text-dark;
+}
+
+element normal.urgent {
+    background-color:            @b-white;
+    text-color:                  @text-dark;
+}
+
+element normal.active {
+    background-color:            @b-white;
+    text-color:                  @text-dark;
+}
+
+element selected.normal {
+    background-color:            @color5;
+    text-color:                  @text-white;
+}
+
+element selected.urgent {
+    background-color:            @b-white;
+    text-color:                  @text-white;
+}
+
+element selected.active {
+    background-color:            @color5;
+    text-color:                  @text-white;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  @text-dark;
+    size:                        32px;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+message {
+    background-color:            transparent;
+}
+
+textbox {
+    padding:                     12px;
+    border-radius:               5px;
+    background-color:            @b-dark;
+    text-color:                  @text-white;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+error-message {
+    padding:                     15px;
+    border-radius:               0px;
+    background-color:            @urgent;
+    text-color:                  @text-white;
+}
