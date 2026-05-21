@@ -1,0 +1,132 @@
+@import "../../.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    show-icons:                  false;
+}
+
+* {
+    color5:                      #01AFEE; /* Fallback accent color */
+    font:                        "NDot57 Bold 11";
+    background:                  rgba(10,15,30,0.85);
+    background-alt:              rgba(15,22,40,0.7);
+    foreground:                  rgba(245,245,255,0.9);
+    b-dark:                      rgba(15,15,25,0.8);
+    text-white:                  rgb(245,245,245);
+    text-gray:                   rgb(180,180,180);
+    accent-color:                @color5;
+}
+
+window {
+    width:                       950px;
+    height:                      520px;
+    margin:                      0px;
+    padding:                     0px;
+    border-radius:               12px;
+    border:                      2px solid;
+    border-color:                @accent-color;
+    background-color:            @background;
+    location:                    center;
+    anchor:                      center;
+}
+
+mainbox {
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listview" ];
+    background-color:            transparent;
+    spacing:                     12px;
+    padding:                     30px;
+}
+
+inputbar {
+    children:                    [ "prompt", "entry" ];
+    border-radius:               8px;
+    spacing:                     10px;
+    padding:                     12px;
+    background-color:            @b-dark;
+}
+
+prompt {
+    background-color:            transparent;
+    text-color:                  @accent-color;
+    font:                        "NDot57 Bold 12";
+}
+
+entry {
+    cursor:                      inherit;
+    placeholder:                 "Buscar atajo o aplicación...";
+    placeholder-color:           rgba(255,255,255,0.4);
+    background-color:            transparent;
+    text-color:                  @text-white;
+}
+
+listview {
+    cursor:                      "default";
+    columns:                     2;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     8px;
+    background-color:            transparent;
+    text-color:                  @text-white;
+}
+
+element {
+    cursor:                      pointer;
+    border-radius:               6px;
+    background-color:            transparent;
+    padding:                     8px 12px;
+}
+
+element normal.normal {
+    background-color:            transparent;
+    text-color:                  @text-white;
+}
+
+element normal.active {
+    background-color:            transparent;
+    text-color:                  @accent-color;
+}
+
+element alternate.normal {
+    background-color:            transparent;
+    text-color:                  @text-white;
+}
+
+element alternate.active {
+    background-color:            transparent;
+    text-color:                  @accent-color;
+}
+
+element selected.normal {
+    background-color:            @background-alt;
+    text-color:                  @text-white;
+    border:                      1px solid;
+    border-color:                @accent-color;
+}
+
+element selected.active {
+    background-color:            @background-alt;
+    text-color:                  @text-white;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+}
+
+message {
+    background-color:            transparent;
+    border:                      0px;
+}
+
+textbox {
+    text-color:                  @text-white;
+    background-color:            transparent;
+}

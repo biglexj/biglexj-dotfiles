@@ -1,64 +1,78 @@
-# Mis Dotfiles
+# 💎 biglexj-dotfiles (ROOT - Orquestador Multi-Perfil)
 
-¡Bienvenido a mis dotfiles! Este repositorio contiene mi configuración personal para un entorno de escritorio Linux moderno y personalizado, centrado en [Hyprland](https://hyprland.org/), un compositor dinámico de Tiling para Wayland.
+¡Bienvenido a mi repositorio principal de configuraciones de sistema! Este repositorio actúa como el **orquestador central (ROOT)** para arrancar y configurar de forma completamente automatizada un entorno Linux vPremium (centrado en Hyprland, Waybar, Zsh, y SDDM), ofreciendo dos perfiles distintos según tus necesidades.
 
-## Filosofía
+El instalador principal está diseñado para ejecutarse mediante **un solo comando `curl` (One-Command Bootstrapper)**. Está pensado para ejecutarse en sistemas limpios: tú solo ejecutas el comando, seleccionas tu perfil, vas a tomar un té, y al regresar tienes tu entorno de escritorio 100% configurado y listo para usar.
 
-Mi objetivo es tener un entorno de escritorio que sea a la vez funcional y estéticamente agradable, con un flujo de trabajo eficiente y centrado en el teclado. La configuración está diseñada para ser modular y fácil de mantener.
+---
 
-## Componentes Principales
+## 🎭 Perfiles Disponibles
 
-| Componente              | Aplicación                                                 | Ubicación de la Configuración                                 |
-| ----------------------- | ---------------------------------------------------------- | ------------------------------------------------------------- |
-| **Compositor Wayland**  | [Hyprland](https://hyprland.org/)                          | `~/.config/hypr/`                                             |
-| **Barra de Estado**     | [Waybar](https://github.com/Alexays/Waybar)                | `~/.config/waybar/`                                           |
-| **Lanzador**            | [Rofi](https://github.com/davatorium/rofi)                 | `~/.config/rofi/`                                             |
-| **Terminal**            | [Kitty](https://sw.kovidgoyal.net/kitty/)                  | `~/.config/kitty/kitty.conf`                                  |
-| **Shell**               | [Zsh](https.www.zsh.org/)                                  | `~/home/Arch/.zshrc`                                          |
-| **Editor de Código**    | [Neovim](https://neovim.io/)                               | `~/.config/nvim/`                                             |
-| **Notificaciones**      | [Swaync](https://github.com/Lentil-Soup/swaync)            | `~/.config/swaync/`                                           |
-| **Pantalla de Bloqueo** | [Hyprlock](https://github.com/hyprwm/hyprlock)             | `~/.config/hypr/hyprlock.conf`                                |
-| **Gestor de Archivos**  | [Ranger](https://ranger.github.io/) / [PCManFM](https://wiki.archlinux.org/title/PCManFM) | `~/.config/ranger/` / `~/.config/pcmanfm/` |
-| **Theming**             | [Pywal](https://github.com/dylanaraps/pywal) / Kvantum     | Scripts en `~/.config/biglexj/`                               |
+Al ejecutar el script de instalación principal `install.sh`, se presentará un menú interactivo premium para elegir entre dos perfiles:
 
-## Características Destacadas
+1. **🍀 Perfil Base (Normal):**
+   * Diseñado para un entorno de escritorio Hyprland premium, sumamente rápido y optimizado.
+   * **Componentes:** Hyprland, Waybar, Rofi, Kitty, Dunst, fastfetch.
+   * **Navegador:** Brave Browser configurado por defecto (Firefox desinstalado automáticamente).
+   * **Temas:** Copia y despliegue del tema de terminal real Zsh (`Terminal-Linux-Theme`) y de la pantalla de acceso SDDM (`hypr-ely-neon`).
+   * **Utilidades:** Selector gráfico de fondos `waypaper` (con backend dinámico `awww`/`swww`) e intercambio de archivos en red local (`localsend-bin`).
 
-*   **Theming Dinámico:** Los colores se generan a partir del fondo de pantalla actual usando `pywal` y se aplican a Waybar, Rofi, Kitty y otros componentes para una apariencia cohesiva.
-*   **Scripts Personalizados:** Una colección de scripts en `~/.config/biglexj/scripts/` para gestionar fondos de pantalla, atajos de teclado, notificaciones y más.
-*   **Menús de Control con Rofi:** Menús interactivos para gestionar Wi-Fi, portapapeles y otras utilidades del sistema.
-*   **Configuración Modular de Hyprland:** Los archivos de configuración de Hyprland están divididos en `~/.config/hypr/conf/` para una mejor organización (animaciones, atajos, reglas de ventanas, etc.).
-*   **Integración con GTK y Qt:** Se utilizan Kvantum, `qt5ct` y `qt6ct` para asegurar que las aplicaciones gráficas sigan el tema general del sistema.
+2. **🔥 Perfil Prime (Vitamina / Premium Completo):**
+   * Orientado a creadores de contenido, artistas digitales y desarrolladores.
+   * **Todo el Stack Base:** Incluye el 100% de la configuración y herramientas del Perfil Base.
+   * **Herramientas Creativas y de Desarrollo:** Instala nativamente **OBS Studio**, **Krita**, **Blender**, **VS Code (`code`)** y el motor de temas Qt **Kvantum**.
+   * **Dictado por Voz Offline:** Descarga, compila y configura el asistente inteligente **Vocalinux** con rutinas de auto-corrección de enlace dinámico para Python.
 
-## Instalación
+---
 
-**Advertencia:** Estos dotfiles están altamente personalizados. Se recomienda hacer un fork y adaptarlos a tus propias necesidades en lugar de clonarlos directamente.
+## 🚀 Filosofía de la Arquitectura Modular
 
-1.  **Clona el repositorio:**
-    ```sh
-    git clone https://github.com/tu_usuario/dotfiles.git
-    ```
+Para garantizar que el instalador sea **fácil de mantener, escalar y auditar**, hemos dividido la lógica de instalación en sub-scripts modulares clasificados **por tecnología** dentro de la carpeta `scripts/`:
 
-2.  **Instala las dependencias:**
-    Asegúrate de tener instaladas todas las aplicaciones mencionadas en la tabla de "Componentes Principales". Los nombres de los paquetes pueden variar según tu distribución de Linux.
+1. **`install.sh` (Orquestador Raíz):** Muestra el selector premium de perfiles en consola y coordina el flujo secuencial llamando a los sub-scripts. Al finalizar, copia de forma limpia las configuraciones de la carpeta `.config/` del repositorio a tu `~/.config/` y despliega la colección de wallpapers en `~/Imágenes/Wallpapers/`.
+2. **`scripts/install_pacman.sh` (Sistema Nativo):** Gestiona la instalación de paquetes esenciales base de Arch Linux (incluyendo el gestor de fondos nativo `awww`), y desinstala Firefox.
+3. **`scripts/install_prime.sh` (Productividad Prime):** Instala las herramientas extras del Perfil Prime vía pacman (`obs-studio`, `krita`, `blender`, `code`, `kvantum`).
+4. **`scripts/install_yay.sh` (Comunidad AUR):** Instala el asistente de AUR `yay` si falta, descarga paquetes de la comunidad y configura Brave como predeterminado.
+5. **`scripts/install_pip.sh` (Python):** Asegura y valida la disponibilidad de Python y `pip` para utilidades de comandos.
+6. **`scripts/setup_zsh.sh` (Terminal & Shell):** Clona `Terminal-Linux-Theme.git` a un directorio temporal, inyectando el `.zshrc` real, copiando los archivos de configuración de `.config/` y de `Wallpapers/` de forma nativa al HOME del usuario, y aplicando permisos de ejecución a los scripts y utilidades.
+7. **`scripts/setup_sddm.sh` (Pantalla de Acceso & Fuentes):** Clona tu tema SDDM personalizado `hypr-ely-neon.git`, busca recursivamente archivos de fuentes tipográficas locales (`.ttf`, `.otf`) colocados directamente en el repositorio (incluyendo la tipografía proprietary **Kefa** y **Ndot**), los instala en el sistema y activa el servicio SDDM.
+8. **`scripts/setup_vocalinux.sh` (Dictado por Voz):** Lanza de forma interactiva el instalador de **Vocalinux** y realiza la autocompilación y reinstalación de `pywhispercpp` en su entorno virtual para solucionar problemas de dependencias en Arch/CachyOS.
 
-3.  **Crea Enlaces Simbólicos:**
-    Puedes usar un gestor de dotfiles como `stow` o crear los enlaces manualmente. Por ejemplo:
-    ```sh
-    ln -s /ruta/a/tus/dotfiles/.config/hypr ~/.config/hypr
-    ln -s /ruta/a/tus/dotfiles/.config/waybar ~/.config/waybar
-    # ... y así sucesivamente para las demás configuraciones.
-    ```
+---
 
-4.  **Recarga la configuración:**
-    Reinicia tu sesión de Hyprland para que todos los cambios surtan efecto.
+## 📂 Estructura del Repositorio
 
-## Atajos de Teclado
+* **`install.sh`:** Script ejecutable de arranque rápido con selector HSL interactivo.
+* **`.config/`:** Carpeta que alberga todas tus configuraciones reales (`hypr`, `waybar`, `rofi`, `kitty`, `fastfetch`, `biglexj`, etc.). Al ejecutarse la instalación, se copian de forma limpia directamente a tu `~/.config/` personal (reutilizable para cualquier usuario).
+* **`Wallpapers/`:** Colección local de fondos de pantalla que se copia automáticamente a `~/Imágenes/Wallpapers/` para eliminar dependencias externas o discos NTFS inexistentes.
+* **`scripts/`:** Contiene los archivos modulares descritos arriba y `utils.sh` (responsable de la cabecera estilizada, logs a color Coral/Menta/Lavanda, spinners y elevación sudo segura).
 
-Los atajos de teclado más importantes están definidos en `~/.config/hypr/conf/binds.conf` y `~/.config/hypr/conf/binds-apps.conf`. Algunos de los atajos por defecto son:
+---
 
-*   `Super + Enter`: Abrir terminal (Kitty)
-*   `Super + D`: Abrir lanzador de aplicaciones (Rofi)
-*   `Super + Q`: Cerrar ventana activa
-*   `Super + [1-9]`: Cambiar a espacio de trabajo
+## 🛠️ Cómo Ejecutar
 
-¡Espero que disfrutes de la configuración!
+Para inicializar tu computadora por primera vez (o para que cualquier persona en la comunidad instale tu configuración), abre una terminal y corre el siguiente comando único:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/biglexj/biglexj-dotfiles/main/install.sh | bash
+```
+
+### Para Desarrolladores (Ejecución Local de Pruebas)
+Si estás editando los scripts en tu espacio de trabajo local y deseas probar la orquestación antes de subir tus cambios a GitHub:
+1. Asegura permisos de ejecución:
+   ```bash
+   chmod +x install.sh scripts/*.sh
+   ```
+2. Ejecuta el orquestador principal:
+   ```bash
+   ./install.sh
+   ```
+
+---
+
+## 🎙️ Control por Voz (Vocalinux)
+
+Vocalinux proporciona un sistema de dictado por voz impecable y respetuoso con tu privacidad:
+* Funciona de manera **100% local y offline** usando `whisper.cpp` y `VOSK`.
+* Admite modos de activación por empuje (*Push-to-Talk*) o palanca (*Toggle*).
+* Puedes usar la combinación de teclas global **`SUPER + D`** (configurada en tu Hyprland real) para activar el micrófono, hablar en español y ver cómo transcribe automáticamente tu voz en la ventana activa.
