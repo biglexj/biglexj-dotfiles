@@ -38,13 +38,13 @@ install_pacman_packages() {
         # Notificaciones
         "swaync"
         # Gestión y Utilidades
-        "pcmanfm" "dolphin" "rofi" "wofi" "udiskie" "fastfetch" "lsd" "ranger"
+        "pcmanfm" "dolphin" "rofi" "wofi" "udiskie" "fastfetch" "lsd" "ranger" "brightnessctl"
         # Temas Qt
         "kvantum" "qt5ct" "qt6ct"
         # Imagen y Gráficos
         "kcolorchooser" "kolourpaint" "gwenview"
         # Audio y Video
-        "audacity" "elisa" "vlc" "kid3"
+        "audacity" "elisa" "vlc" "kid3" "pamixer"
         # Logout / Sesión
         "wlogout"
         # Otras aplicaciones
