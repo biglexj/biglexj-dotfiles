@@ -112,7 +112,8 @@
                 "<span color='#7aa2f7'> </span>"
             ]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-click-right": "~/.config/waybar/scripts/audio-switcher.sh"
     },
 
     "backlight": {
