@@ -81,51 +81,67 @@ setup_zsh_config() {
     fi
 
     # ─────────────────────────────────────────────
-    # 4. Copiar configuración .zshrc desde Terminal-Linux-Theme
+    # 4. Aplicar .zshrc desde el dotfiles (preferir local sobre repo externo)
     # ─────────────────────────────────────────────
-    local theme_repo="https://github.com/biglexj/Terminal-Linux-Theme.git"
-    local tmp_dir="/tmp/Terminal-Linux-Theme-Install"
+    local local_zshrc="$BASE_DIR/home/.zshrc"
+    local backup_path="$HOME/.config/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$backup_path"
 
-    rm -rf "$tmp_dir"
-    log_action "Clonando repositorio de temas de terminal desde GitHub..."
-    git clone "$theme_repo" "$tmp_dir"
-
-    if [ ! -d "$tmp_dir" ]; then
-        log_error "No se pudo descargar el repositorio $theme_repo."
-        exit 1
-    fi
-
-    # Respaldar .zshrc existente
-    if [ -f "$HOME/.zshrc" ]; then
-        local backup_path="$HOME/.config/dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-        mkdir -p "$backup_path"
+    if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
         cp "$HOME/.zshrc" "$backup_path/.zshrc.bak"
         log_success "Respaldo del .zshrc guardado en $backup_path"
     fi
 
-    # Determinar carpeta según distro
-    local src_folder=""
-    if [ -f /etc/arch-release ]; then
-        log_info "Sistema Arch detectado."
-        src_folder="$tmp_dir/Arch"
-    else
-        log_info "Sistema Debian/Otros detectado."
-        src_folder="$tmp_dir/Debian"
-    fi
+    if [ -f "$local_zshrc" ]; then
+        log_info ".zshrc local encontrado en $local_zshrc. Creando symlink..."
+        rm -f "$HOME/.zshrc"
+        ln -s "$local_zshrc" "$HOME/.zshrc"
+        log_success ".zshrc enlazado a $local_zshrc"
 
-    if [ -d "$src_folder" ]; then
-        if [ -f "$src_folder/.zshrc" ]; then
-            cp "$src_folder/.zshrc" "$HOME/.zshrc"
-            log_success ".zshrc copiado a $HOME/."
-        fi
-        if [ -d "$src_folder/zsh" ]; then
+        if [ -d "$BASE_DIR/home/.zsh" ]; then
             rm -rf "$HOME/.zsh"
-            cp -r "$src_folder/zsh" "$HOME/.zsh"
-            log_success "Carpeta .zsh copiada a $HOME/.zsh."
+            ln -s "$BASE_DIR/home/.zsh" "$HOME/.zsh"
+            log_success "Carpeta .zsh enlazada desde el dotfiles."
         fi
     else
-        log_error "No se encontró la carpeta $src_folder en el repositorio clonado."
-        exit 1
+        # Fallback: clonar repo externo (comportamiento legacy)
+        local theme_repo="https://github.com/biglexj/Terminal-Linux-Theme.git"
+        local tmp_dir="/tmp/Terminal-Linux-Theme-Install"
+
+        rm -rf "$tmp_dir"
+        log_action "No se encontró home/.zshrc local. Clonando repositorio externo..."
+        git clone "$theme_repo" "$tmp_dir"
+
+        if [ ! -d "$tmp_dir" ]; then
+            log_error "No se pudo descargar el repositorio $theme_repo."
+            exit 1
+        fi
+
+        local src_folder=""
+        if [ -f /etc/arch-release ]; then
+            log_info "Sistema Arch detectado."
+            src_folder="$tmp_dir/Arch"
+        else
+            log_info "Sistema Debian/Otros detectado."
+            src_folder="$tmp_dir/Debian"
+        fi
+
+        if [ -d "$src_folder" ]; then
+            if [ -f "$src_folder/.zshrc" ]; then
+                cp "$src_folder/.zshrc" "$HOME/.zshrc"
+                log_success ".zshrc copiado a $HOME/."
+            fi
+            if [ -d "$src_folder/zsh" ]; then
+                rm -rf "$HOME/.zsh"
+                cp -r "$src_folder/zsh" "$HOME/.zsh"
+                log_success "Carpeta .zsh copiada a $HOME/.zsh."
+            fi
+        else
+            log_error "No se encontró la carpeta $src_folder en el repositorio clonado."
+            exit 1
+        fi
+
+        rm -rf "$tmp_dir"
     fi
 
     # ─────────────────────────────────────────────

@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# kde-init - Inicia KDE Plasma bajo demanda
+#
+# El sistema arranca por defecto en TTY (modo servidor, multi-user.target).
+# Ejecuta 'kde-init' cuando quieras iniciar el escritorio KDE.
+# SDDM está configurado con autologin a 'plasma' (ver /etc/sddm.conf),
+# así que iniciar SDDM = entrar directo a KDE Plasma.
+#
+# Uso:
+#   kde-init         Inicia SDDM (autologin -> KDE Plasma)
+#   kde-init stop    Detiene la sesión gráfica
+#   kde-init status  Muestra el estado actual
+#   kde-init help    Muestra esta ayuda
+
+set -e
+
+RED=$'\033[0;31m'
+GRN=$'\033[0;32m'
+YLW=$'\033[1;33m'
+CYN=$'\033[0;36m'
+DIM=$'\033[2m'
+RST=$'\033[0m'
+
+is_graphical_active() {
+    if systemctl is-active --quiet sddm 2>/dev/null; then return 0; fi
+    if pgrep -x Hyprland >/dev/null 2>&1; then return 0; fi
+    if pgrep -x plasmashell >/dev/null 2>&1; then return 0; fi
+    return 1
+}
+
+print_status() {
+    if is_graphical_active; then
+        echo -e "  Sesión gráfica: ${GRN}ACTIVA${RST}"
+    else
+        echo -e "  Sesión gráfica: ${RED}INACTIVA${RST}"
+    fi
+    printf "  SDDM service:   %s\n" "$(systemctl is-active sddm 2>/dev/null || echo '(sin respuesta)')"
+    printf "  SDDM enabled:   %s\n" "$(systemctl is-enabled sddm 2>/dev/null || echo '(sin respuesta)')"
+    echo "  Default target: $(systemctl get-default)"
+    local tty_now
+    tty_now=$(tty 2>/dev/null || echo "(no tty)")
+    echo "  TTY actual:     $tty_now"
+}
+
+ACTION="${1:-start}"
+
+case "$ACTION" in
+    start|"")
+        if is_graphical_active; then
+            echo -e "${YLW}[kde-init]${RST} Ya hay una sesión gráfica activa."
+            print_status
+            exit 0
+        fi
+
+        if ! command -v sddm >/dev/null 2>&1; then
+            echo -e "${RED}[kde-init]${RST} sddm no está instalado."
+            echo "            Instálalo con: sudo pacman -S sddm"
+            exit 1
+        fi
+
+        CURRENT_TTY=$(tty 2>/dev/null || echo "")
+        if [ -n "$CURRENT_TTY" ] && [ "$CURRENT_TTY" != "/dev/tty1" ]; then
+            echo -e "${YLW}[kde-init]${RST} Estás en ${CURRENT_TTY}, no en TTY1."
+            echo "            SDDM se mostrará en la pantalla física (TTY1)."
+            if command -v chvt >/dev/null; then
+                if sudo -n chvt 1 2>/dev/null; then
+                    sleep 1
+                else
+                    echo -e "            ${DIM}(ejecuta manualmente: sudo chvt 1)${RST}"
+                fi
+            fi
+        fi
+
+        echo -e "${CYN}[kde-init]${RST} Iniciando SDDM (autologin -> KDE Plasma)..."
+        if ! sudo systemctl start sddm; then
+            echo -e "${RED}[kde-init]${RST} Error al iniciar SDDM."
+            echo "            Diagnóstico: journalctl -u sddm -n 30"
+            exit 1
+        fi
+        sleep 1
+        if systemctl is-active --quiet sddm; then
+            echo -e "${GRN}[kde-init]${RST} Listo. El escritorio aparecerá en la pantalla."
+        else
+            echo -e "${RED}[kde-init]${RST} SDDM se detuvo inmediatamente. Revisa: journalctl -u sddm -n 30"
+            exit 1
+        fi
+        ;;
+    stop)
+        echo -e "${CYN}[kde-init]${RST} Deteniendo sesión gráfica..."
+        sudo systemctl stop sddm 2>/dev/null || true
+        pkill -x Hyprland 2>/dev/null || true
+        pkill -x plasmashell 2>/dev/null || true
+        sleep 1
+        print_status
+        ;;
+    status)
+        print_status
+        ;;
+    help|-h|--help)
+        cat <<EOF
+kde-init - Inicia KDE Plasma bajo demanda
+
+Uso:
+  kde-init         Inicia SDDM (autologin -> KDE Plasma)
+  kde-init stop    Detiene la sesión gráfica
+  kde-init status  Muestra el estado actual
+  kde-init help    Muestra esta ayuda
+
+Notas:
+  - El sistema sigue arrancando en TTY (modo servidor).
+  - SDDM está configurado con autologin -> plasma (ver /etc/sddm.conf).
+  - Para Hyprland ejecute 'Hyprland' directamente desde TTY1.
+EOF
+        ;;
+    *)
+        echo "Uso: kde-init [start|stop|status|help]"
+        exit 1
+        ;;
+esac
