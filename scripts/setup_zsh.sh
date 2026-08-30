@@ -157,51 +157,13 @@ setup_zsh_config() {
     fi
 
     # ─────────────────────────────────────────────
-    # 6. Copiar configs de .conf/ a ~/.config/ (sin symlinks)
+    # 6. Enlazar configuraciones (.config) vía Symlinks
     # ─────────────────────────────────────────────
-    local conf_src="$BASE_DIR/.config"
-    local conf_dest="$HOME/.config"
-    local conf_backup="$HOME/.config/dotfiles_backup/$(date +%Y%m%d_%H%M%S)_conf"
-
-    if [ -d "$conf_src" ] && [ "$(ls -A "$conf_src")" ]; then
-        mkdir -p "$conf_backup"
-        log_action "Copiando configuraciones de .conf/ a ~/.config/ (reemplazando existentes)..."
-
-        for folder_path in "$conf_src"/*/; do
-            if [ -d "$folder_path" ]; then
-                local folder_name
-                folder_name=$(basename "$folder_path")
-                local dest_folder="$conf_dest/$folder_name"
-
-                # Respaldar si existe (sea archivo, carpeta o symlink)
-                if [ -e "$dest_folder" ] || [ -L "$dest_folder" ]; then
-                    cp -r "$dest_folder" "$conf_backup/" 2>/dev/null
-                    rm -rf "$dest_folder"
-                    log_info "Respaldo de $folder_name guardado."
-                fi
-
-                # Copiar (no symlink)
-                cp -r "$folder_path" "$dest_folder"
-                log_success "Configuración copiada: ~/.config/$folder_name"
-            fi
-        done
-        log_success "Todas las configuraciones de .conf/ aplicadas correctamente."
-
-        # Dar permisos de ejecución a todos los scripts de biglexj
-        if [ -d "$HOME/.config/biglexj" ]; then
-            find "$HOME/.config/biglexj" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} \;
-            chmod +x "$HOME/.config/biglexj/control-center/wifimenu" 2>/dev/null
-            log_success "Permisos de ejecución aplicados a scripts (.sh, .py) de ~/.config/biglexj/."
-        fi
-
-        # Dar permisos de ejecución a los scripts de waybar
-        if [ -d "$HOME/.config/waybar/scripts" ]; then
-            chmod +x "$HOME/.config/waybar/scripts/"* 2>/dev/null
-            log_success "Permisos de ejecución aplicados a scripts de ~/.config/waybar/."
-        fi
-
+    if [ -f "$SCRIPTS_DIR/setup_dotfiles_links.sh" ]; then
+        log_action "Creando symlinks de dotfiles (.zshrc, kde-init y .config/)..."
+        bash "$SCRIPTS_DIR/setup_dotfiles_links.sh"
     else
-        log_warning "No se encontraron configuraciones en $conf_src/. Saltando copia de .conf/."
+        log_warning "No se encontró $SCRIPTS_DIR/setup_dotfiles_links.sh"
     fi
 
     # ─────────────────────────────────────────────

@@ -116,13 +116,12 @@ run_bootstrapper() {
         bash "$SCRIPTS_DIR/setup_sddm.sh"
     fi
     
-    # E.5. Symlinks del dotfiles (kde-init, .zshrc -> dotfiles)
+    # F. Symlinks del dotfiles (kde-init, .zshrc, y todo .config/ -> dotfiles)
     if [ -f "$SCRIPTS_DIR/setup_dotfiles_links.sh" ]; then
         bash "$SCRIPTS_DIR/setup_dotfiles_links.sh"
     fi
-    
-    # F. Las configuraciones ya fueron copiadas por setup_zsh.sh desde .config/
-    # No se necesita paso adicional    # ==================== BLOQUE DE INSTALACIÓN PRIME ====================
+
+    # ==================== BLOQUE DE INSTALACIÓN PRIME ====================
     if [ "$profile" = "prime" ]; then
         print_header "Fase 2: Instalación de la Suite Prime (Vitamina)"
         

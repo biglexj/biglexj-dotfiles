@@ -70,9 +70,25 @@ setup_dotfiles_links() {
             name=$(basename "$item")
             link_target ".config/$name" "$item" "$HOME/.config/$name"
         done
+    # 3. Permisos de ejecución para scripts en .config y scripts/
+    if [ -d "$BASE_DIR/.config/biglexj" ]; then
+        find "$BASE_DIR/.config/biglexj" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} \;
+        chmod +x "$BASE_DIR/.config/biglexj/control-center/wifimenu" 2>/dev/null
+    fi
+    if [ -d "$BASE_DIR/.config/waybar/scripts" ]; then
+        chmod +x "$BASE_DIR/.config/waybar/scripts/"* 2>/dev/null
+    fi
+    if [ -f "$BASE_DIR/.config/swaync/start-swaync.sh" ]; then
+        chmod +x "$BASE_DIR/.config/swaync/start-swaync.sh" 2>/dev/null
+    fi
+    if [ -f "$BASE_DIR/.config/hypr/hyprlock/battery.sh" ]; then
+        chmod +x "$BASE_DIR/.config/hypr/hyprlock/battery.sh" 2>/dev/null
+    fi
+    if [ -f "$BASE_DIR/.config/hypr/hyprctl/hyprctl.sh" ]; then
+        chmod +x "$BASE_DIR/.config/hypr/hyprctl/hyprctl.sh" 2>/dev/null
     fi
 
-    log_success "Todos los symlinks del dotfiles están listos."
+    log_success "Todos los symlinks y permisos del dotfiles están listos."
     log_info "Recarga tu shell: source ~/.zshrc"
 }
 
