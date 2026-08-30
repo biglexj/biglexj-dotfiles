@@ -44,8 +44,8 @@ link_target() {
     elif [ -e "$link_path" ]; then
         mkdir -p "$BACKUP_DIR"
         cp -a "$link_path" "$BACKUP_DIR/"
-        log_warning "$label: archivo existente respaldado en $BACKUP_DIR"
-        rm -f "$link_path"
+        log_warning "$label: archivo/directorio existente respaldado en $BACKUP_DIR"
+        rm -rf "$link_path"
     fi
 
     mkdir -p "$(dirname "$link_path")"
@@ -54,13 +54,25 @@ link_target() {
 }
 
 setup_dotfiles_links() {
-    print_header "Symlinks del Dotfiles (kde-init, .zshrc)"
+    print_header "Symlinks del Dotfiles (KDE, Shell y .config)"
 
+    # 1. Scripts y Shell
     link_target "kde-init"  "$BASE_DIR/scripts/kde-init" "$HOME/.local/bin/kde-init"
     chmod +x "$BASE_DIR/scripts/kde-init" 2>/dev/null
     link_target ".zshrc"    "$BASE_DIR/home/.zshrc"      "$HOME/.zshrc"
 
-    log_success "Symlinks del dotfiles listos."
+    # 2. Todos los paquetes y configuraciones en .config/
+    if [ -d "$BASE_DIR/.config" ]; then
+        mkdir -p "$HOME/.config"
+        for item in "$BASE_DIR/.config"/*; do
+            [ -e "$item" ] || continue
+            local name
+            name=$(basename "$item")
+            link_target ".config/$name" "$item" "$HOME/.config/$name"
+        done
+    fi
+
+    log_success "Todos los symlinks del dotfiles están listos."
     log_info "Recarga tu shell: source ~/.zshrc"
 }
 

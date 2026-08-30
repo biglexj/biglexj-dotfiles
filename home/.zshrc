@@ -73,7 +73,7 @@ export LS_COLORS=""
 alias install='sudo pacman -S'
 alias uninstall='sudo pacman -Rns'
 alias installu='sudo pacman -U'
-alias upd='sudo pacman -Syu'
+alias update='sudo pacman -Syu'
 alias par='paru'
 alias pi='paru -S'
 alias pu='paru -Rns'
@@ -533,9 +533,11 @@ alias aurora-start="bash $AURORA_SCRIPTS/aurora-start.sh"
 alias aurora-stop="bash $AURORA_SCRIPTS/aurora-stop.sh"
 alias aurora-build="bash $AURORA_SCRIPTS/aurora-build.sh"
 alias aurora-restart="bash $AURORA_SCRIPTS/aurora-restart.sh"
+alias modo-dev="sudo bash $AURORA_SCRIPTS/start_development.sh"
+alias modo-user="sudo bash $AURORA_SCRIPTS/restore_domestic.sh"
 
 # Despachador principal: aurora <subcomando> [args]
-# Subcomandos: build | start | stop | restart | check | pull | cd | logs
+# Subcomandos: build | start | stop | restart | check | pull | cd | logs | mode
 function aurora() {
     local cmd="$1"
     if [ -z "$cmd" ]; then
@@ -552,6 +554,17 @@ function aurora() {
         pull)         bash "$AURORA_SCRIPTS/aurora-pull.sh" "$@" ;;
         cd|goto)      cd "$AURORA_ROOT" ;;
         logs)         bash "$AURORA_SCRIPTS/aurora-logs.sh" "$@" ;;
+        mode)
+            case "$1" in
+                dev|server)   sudo bash "$AURORA_SCRIPTS/start_development.sh" ;;
+                user|desktop) sudo bash "$AURORA_SCRIPTS/restore_domestic.sh" ;;
+                *)
+                    echo "Uso: aurora mode [dev|user]"
+                    echo "  aurora mode dev  → Headless / TTY1 autologin / Aurora services"
+                    echo "  aurora mode user → KDE Plasma / SDDM gráfico"
+                    ;;
+            esac
+            ;;
         help|-h|--help)
             echo ""
             echo "🛠️  Aurora CLI — Gestión del ecosistema de servicios"
@@ -567,6 +580,7 @@ function aurora() {
             echo "  aurora check             → Ver estado de todos los servicios"
             echo "  aurora logs    [svc]     → Ver logs (pm2 o archivos)"
             echo "  aurora pull    [--restart] → git pull + reinstalar deps"
+            echo "  aurora mode    [dev|user]  → Alternar modo Dev (TTY/Server) o User (KDE)"
             echo ""
             echo "TARGETS (build):  all | backend | live | live-chat | voice | aicore | ely-core"
             echo "TARGETS (start):  all | astro | core | live | voz | voice | ely | ely-core | intelligence"
@@ -577,10 +591,12 @@ function aurora() {
             echo "  aurora restart ely-core      → Reiniciar solo ElyCore"
             echo "  aurora logs voice            → Ver logs del servicio Voice"
             echo "  aurora pull --restart        → Pull + reinstalar + reiniciar"
+            echo "  aurora mode dev              → Activar modo desarrollo (TTY1 / Headless)"
+            echo "  aurora mode user             → Activar modo usuario (KDE Plasma)"
             echo ""
             echo "ALIASES DIRECTOS (con guion):"
             echo "  aurora-build, aurora-start, aurora-stop, aurora-restart,"
-            echo "  aurora-check, aurora-pull"
+            echo "  aurora-check, aurora-pull, modo-dev, modo-user"
             ;;
         *)
             echo "Comando desconocido: $cmd (usa 'aurora help')" >&2
@@ -589,6 +605,12 @@ function aurora() {
     esac
 }
 # === END AURORA MANAGED ALIASES ===
+
+# ==============================================================================
+# 🔋 BATERÍA — Consulta rápida desde la terminal
+# ==============================================================================
+alias bateria='echo "🔋 Batería: $(cat /sys/class/power_supply/BAT0/capacity 2>/dev/null)% [$(cat /sys/class/power_supply/BAT0/status 2>/dev/null)]"'
+alias bateria-info='upower -i $(upower -e | grep BAT)'
 
 # ==============================================================================
 # 🖥️ KDE INIT — Inicia KDE Plasma bajo demanda (vía SDDM + autologin)
@@ -603,3 +625,10 @@ if [ -x "$HOME/.local/bin/kde-init" ]; then
     alias gui-kde='kde-init start'
 fi
 # === END KDE INIT ===
+
+# mimocode
+export PATH=/home/biglexj/.mimocode/bin:$PATH
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/biglexj/.local/bin:$PATH"

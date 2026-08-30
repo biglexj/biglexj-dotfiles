@@ -97,7 +97,7 @@ progress.indicator.text.color=#cfd8dc
 [Hacks]
 transparent_ktitle_label=true
 transparent_dolphin_view=false
-transparent_pcmanfm_sidepane=true
+transparent_pcmanfm_sidepane=false
 blur_translucent=true
 transparent_menutitle=true
 respect_darkness=true
@@ -113,7 +113,7 @@ tint_on_mouseover=0
 transparent_pcmanfm_view=false
 no_selection_tint=true
 transparent_arrow_button=true
-blur_only_active_window=false
+blur_only_active_window=true
 centered_forms=false
 kinetic_scrolling=false
 middle_click_scroll=false

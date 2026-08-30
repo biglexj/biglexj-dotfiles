@@ -98,8 +98,8 @@ progress.indicator.text.color=#DEE3E5
 
 [Hacks]
 transparent_ktitle_label=true
-transparent_dolphin_view=true
-transparent_pcmanfm_sidepane=true
+transparent_dolphin_view=false
+transparent_pcmanfm_sidepane=false
 blur_translucent=false
 transparent_menutitle=true
 respect_darkness=true
@@ -112,7 +112,7 @@ lxqtmainmenu_iconsize=16
 normal_default_pushbutton=true
 single_top_toolbar=true
 tint_on_mouseover=0
-transparent_pcmanfm_view=true
+transparent_pcmanfm_view=false
 no_selection_tint=true
 transparent_arrow_button=true
 middle_click_scroll=false
